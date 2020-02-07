@@ -1,5 +1,7 @@
 package com.game.chess;
 
+import com.game.chess.game.ChessGame;
+
 public class ChessApplication {
 
     public static void main(String[] args) {

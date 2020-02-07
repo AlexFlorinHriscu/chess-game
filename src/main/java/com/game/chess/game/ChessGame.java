@@ -1,4 +1,4 @@
-package com.game.chess;
+package com.game.chess.game;
 
 import com.game.chess.exception.GameException;
 import com.game.chess.factory.GameModeFactory;
