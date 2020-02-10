@@ -23,7 +23,7 @@ public class BishopValidator implements PieceValidator {
                 x = move[1] - 1;
                 y = move[0] - 1;
                 while(y > move[2]) {
-                    if (chessTable.getTable()[x][y] != '_') {
+                    if (CHESS_BOARD.getTable()[x][y] != '_') {
                         return false;
                     }
                     y--;
@@ -33,7 +33,7 @@ public class BishopValidator implements PieceValidator {
                 x = move[1] + 1;
                 y = move[0] - 1;
                 while(y > move[2]) {
-                    if (chessTable.getTable()[x][y] != '_') {
+                    if (CHESS_BOARD.getTable()[x][y] != '_') {
                         return false;
                     }
                     y--;
@@ -45,7 +45,7 @@ public class BishopValidator implements PieceValidator {
                 x = move[1] - 1;
                 y = move[0] + 1;
                 while(y < move[2]) {
-                    if (chessTable.getTable()[x][y] != '_') {
+                    if (CHESS_BOARD.getTable()[x][y] != '_') {
                         return false;
                     }
                     y++;
@@ -55,7 +55,7 @@ public class BishopValidator implements PieceValidator {
                 x = move[1] + 1;
                 y = move[0] + 1;
                 while(y < move[2]) {
-                    if (chessTable.getTable()[x][y] != '_') {
+                    if (CHESS_BOARD.getTable()[x][y] != '_') {
                         return false;
                     }
                     y++;

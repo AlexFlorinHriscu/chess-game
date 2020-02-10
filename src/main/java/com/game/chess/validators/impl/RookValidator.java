@@ -23,7 +23,7 @@ public class RookValidator implements PieceValidator {
             if (move[0] < move[2]) {
                 y = move[0] + 1;
                 while (y < move[2]) {
-                    if (chessTable.getTable()[move[1]][y] != '_') {
+                    if (CHESS_BOARD.getTable()[move[1]][y] != '_') {
                         return false;
                     }
                     y++;
@@ -31,7 +31,7 @@ public class RookValidator implements PieceValidator {
             } else {
                 y = move[0] - 1;
                 while (y > move[2]) {
-                    if (chessTable.getTable()[move[1]][y] != '_') {
+                    if (CHESS_BOARD.getTable()[move[1]][y] != '_') {
                         return false;
                     }
                     y--;
@@ -41,7 +41,7 @@ public class RookValidator implements PieceValidator {
             if (move[1] < move[3]) {
                 x = move[1] + 1;
                 while (x < move[3]) {
-                    if (chessTable.getTable()[x][move[0]] != '_') {
+                    if (CHESS_BOARD.getTable()[x][move[0]] != '_') {
                         return false;
                     }
                     x++;
@@ -49,7 +49,7 @@ public class RookValidator implements PieceValidator {
             } else {
                 x = move[1] - 1;
                 while (x > move[3]) {
-                    if (chessTable.getTable()[x][move[0]] != '_') {
+                    if (CHESS_BOARD.getTable()[x][move[0]] != '_') {
                         return false;
                     }
                     x--;

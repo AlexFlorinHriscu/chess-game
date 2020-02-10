@@ -9,7 +9,7 @@ public class PawnValidator implements PieceValidator {
     public boolean accepts(Piece piece, int[] move) {
         if (!isGoingForward(move, piece.getPlayer()))
             return false;
-        if (chessTable.getPieceFromPosition(move[3], move[2]) != '_') {
+        if (CHESS_BOARD.getPieceFromPosition(move[3], move[2]) != '_') {
             return isValidAttackMove(move);
         } else {
             return isValidMove(move) || isValidTwoSpacesMove(piece, move);
@@ -32,10 +32,10 @@ public class PawnValidator implements PieceValidator {
     }
 
     private boolean isPieceBetween(int[] move, int player) {
-        if (player > 0 && chessTable.getTable()[move[1]-1][move[0]] != '_') {
+        if (player > 0 && CHESS_BOARD.getTable()[move[1]-1][move[0]] != '_') {
             return true;
         }
-        if (player < 0 && chessTable.getTable()[move[1]+1][move[0]] != '_') {
+        if (player < 0 && CHESS_BOARD.getTable()[move[1]+1][move[0]] != '_') {
             return true;
         }
         return false;

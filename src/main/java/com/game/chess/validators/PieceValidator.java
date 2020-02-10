@@ -1,16 +1,16 @@
 package com.game.chess.validators;
 
 import com.game.chess.models.Piece;
-import com.game.chess.services.ChessTable;
+import com.game.chess.game.ChessBoard;
 
 public interface PieceValidator {
 
-    ChessTable chessTable = ChessTable.getChessTable();
+    ChessBoard CHESS_BOARD = ChessBoard.getChessTable();
 
     boolean accepts(Piece piece, int[] move);
     default void process(Piece piece, int[] move) {
-        chessTable.getTable()[move[1]][move[0]] = '_';
-        chessTable.getTable()[move[3]][move[2]] = piece.getGameSymbol();
+        CHESS_BOARD.getTable()[move[1]][move[0]] = '_';
+        CHESS_BOARD.getTable()[move[3]][move[2]] = piece.getGameSymbol();
     }
 
 }
