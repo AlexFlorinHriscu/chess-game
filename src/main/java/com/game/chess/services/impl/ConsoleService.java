@@ -1,4 +1,4 @@
-package com.game.chess.services;
+package com.game.chess.services.impl;
 
 import java.util.Scanner;
 
