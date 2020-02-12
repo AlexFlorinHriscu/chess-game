@@ -1,7 +1,7 @@
 package com.game.chess.gamemode;
 
 import com.game.chess.exception.GameException;
-import com.whitehatgaming.UserInputFile;
+import com.game.chess.services.impl.UserInputFile;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 
 public class ReadMovesFromFileGame extends GameMode {
 
-    private static final String FOLDER = "resources";
+    private static final String RESOURCES_FOLDER = "resources";
 
     @Override
     public void readMoves() throws GameException {
@@ -29,9 +29,10 @@ public class ReadMovesFromFileGame extends GameMode {
     private void doMoves(Path file) throws GameException {
         int[] values;
         try {
-            UserInputFile userInputFile = new UserInputFile(file.toFile().getPath());
+            this.setUserInput(file);
             int player = 1;
-            while((values = userInputFile.nextMove()) != null) {
+            while((values = this.userInput.nextMove()) != null) {
+                this.chessTable.fullDisplay();
                 this.console.displayPlayerTurnMessage(player);
                 if (gameService.isCheckForPlayer(player)) {
                     System.out.println("Attention ! It is check !");
@@ -40,14 +41,13 @@ public class ReadMovesFromFileGame extends GameMode {
                 if (this.gameService.processMove(values, player)) {
                     player *= -1;
                 } else {
-                    System.out.println("MOVE WAS INVALID");
+                    System.out.println("Attention! MOVE WAS INVALID!");
                 }
-                this.chessTable.fullDisplay();
             }
         } catch (StringIndexOutOfBoundsException e) {
             throw new GameException("\nInvalid format of data inside file " + file.getFileName().toString());
         } catch (FileNotFoundException e) {
-            throw new GameException("File doesn't exist");
+            throw new GameException("File " + file.getFileName().toString() + " doesn't exist");
         } catch (IOException e) {
             throw new GameException("There was a problem reading the file");
         }
@@ -55,18 +55,16 @@ public class ReadMovesFromFileGame extends GameMode {
 
     private Optional<Path> getFile() {
         List<Path> files = listFiles();
-
         if (files.size() > 0) {
             displayFiles(files);
             return Optional.of(files.get(getUserChoice(files.size())));
         }
-
         return Optional.empty();
     }
 
     private List<Path> listFiles() {
         List<Path> files = new ArrayList<>();
-        try (Stream<Path> paths = Files.walk(Paths.get(FOLDER))) {
+        try (Stream<Path> paths = Files.walk(Paths.get(RESOURCES_FOLDER))) {
             files = paths.filter(Files::isRegularFile).collect(Collectors.toList());
         } catch (IOException e) {
             System.out.println("There was a problem reading the resources folder.");
@@ -83,7 +81,7 @@ public class ReadMovesFromFileGame extends GameMode {
     }
 
     private int getUserChoice(int options) {
-        System.out.print("Select file (type the corresponding number: ");
+        System.out.print("Select file (type the corresponding number): ");
         String userInput = console.getPlayerInput();
         int selectedIndex;
         while (true) {
@@ -97,6 +95,10 @@ public class ReadMovesFromFileGame extends GameMode {
             }
         }
         return selectedIndex - 1;
+    }
+
+    private void setUserInput(Path file) throws FileNotFoundException {
+        this.userInput = new UserInputFile(file.toFile().getPath());
     }
 
 }

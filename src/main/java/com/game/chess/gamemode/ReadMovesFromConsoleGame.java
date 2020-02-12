@@ -1,33 +1,44 @@
 package com.game.chess.gamemode;
 
+import com.game.chess.exception.GameException;
+import com.game.chess.services.impl.UserInputConsole;
+import java.io.IOException;
+
 public class ReadMovesFromConsoleGame extends GameMode {
 
+    public ReadMovesFromConsoleGame() {
+        this.userInput = new UserInputConsole();
+    }
+
     @Override
-    public void readMoves() {
+    public void readMoves() throws GameException {
         int[] values;
         int player = 1;
         while(true) {
+            boolean moveIsValid = true;
             this.chessTable.fullDisplay();
             this.console.displayPlayerTurnMessage(player);
             if (gameService.isCheckForPlayer(player)) {
                 System.out.println("Attention ! It is check !");
             }
-            System.out.print("Give next move or q to quit in the format (example : e2e4): ");
-            String line = this.console.getPlayerInput();
-            if (line.equals("q") || line.equals("Q")) {
-                break;
+            System.out.print("Give next move or press q to quit (example : e2e4): ");
+            try {
+                values = userInput.nextMove();
+                if (values == null) {
+                    System.out.print("\nGame was STOPPED !");
+                    break;
+                }
+            } catch (IOException | StringIndexOutOfBoundsException e) {
+                System.out.println("There was a problem reading the next move. Try again or press q to exit!");
+                moveIsValid = false;
+                values = null;
             }
-            values = getMove(line);
-            if (this.gameService.processMove(values, player)) {
+            if (moveIsValid && this.gameService.processMove(values, player)) {
                 player *= -1;
             } else {
                 System.out.println("MOVE WAS INVALID");
             }
-       }
-    }
-
-    private int[] getMove(String line) {
-        return new int[]{line.charAt(0) - 97, 56 - line.charAt(1), line.charAt(2) - 97, 56 - line.charAt(3)};
+        }
     }
 
 }
