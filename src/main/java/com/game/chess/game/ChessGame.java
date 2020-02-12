@@ -3,9 +3,12 @@ package com.game.chess.game;
 import com.game.chess.exception.GameException;
 import com.game.chess.factory.GameModeFactory;
 import com.game.chess.gamemode.GameMode;
-import com.game.chess.services.ConsoleService;
+import com.game.chess.services.impl.ConsoleService;
 
 public class ChessGame {
+
+    private static final String READ_MOVES_FROM_FILE = "file";
+    private static final String READ_MOVES_FROM_CONSOLE = "console";
 
     private ConsoleService console;
 
@@ -18,7 +21,7 @@ public class ChessGame {
         try {
             game.start();
         } catch (GameException e) {
-            System.out.println("There was a problem : " + e.getMessage());
+            System.out.println("\n\nGame Stopped due to: " + e.getMessage());
         }
     }
 
@@ -29,11 +32,11 @@ public class ChessGame {
         while(invalidInput) {
             switch(console.getPlayerInput()) {
                 case "1":
-                    gameMode = "file";
+                    gameMode = READ_MOVES_FROM_FILE;
                     invalidInput = false;
                     break;
                 case "2":
-                    gameMode = "console";
+                    gameMode = READ_MOVES_FROM_CONSOLE;
                     invalidInput = false;
                     break;
                 default:
@@ -41,7 +44,6 @@ public class ChessGame {
             }
         }
         return gameMode;
-
     }
 
 }

@@ -10,6 +10,16 @@ import com.game.chess.models.Rook;
 public class ChessBoard {
 
     private static final ChessBoard chess = new ChessBoard();
+    private final int DIMMENSION = 8;
+    private char[][] chessTable = new char[DIMMENSION][DIMMENSION];
+
+    public static int[] KING_PLAYER1;
+    public static int[] KING_PLAYER2;
+
+    static {
+        KING_PLAYER1 = new int[]{7, 4};
+        KING_PLAYER2 = new int[]{0, 4};
+    }
 
     private ChessBoard() {
     }
@@ -17,12 +27,6 @@ public class ChessBoard {
     public static ChessBoard getChessTable() {
         return chess;
     }
-
-    private final int DIMMENSION = 8;
-    private char[][] chessTable = new char[DIMMENSION][DIMMENSION];
-
-    public static int[] KING_PLAYER1 = new int[]{7, 4};
-    public static int[] KING_PLAYER2 = new int[]{0, 4};
 
     public char[][] getTable() {
         return chessTable;
